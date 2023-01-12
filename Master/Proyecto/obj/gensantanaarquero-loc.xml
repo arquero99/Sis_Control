@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<Locations >
+  <Project>
+    <vfs_file />
+    <file_marker column=" 1" line=" 1" >
+      <vfs_project>E:\Sis_control\Master\Proyecto\gensantanaarquero.gpr</vfs_project>
+      <vfs_file>E:\Sis_control\Master\Proyecto\src\ga_main.adb</vfs_file>
+    </file_marker>
+    <file_marker current="true" column=" 1" line=" 1" >
+      <vfs_project>E:\Sis_control\Master\Proyecto\gensantanaarquero.gpr</vfs_project>
+      <vfs_file>E:\Sis_control\Master\Proyecto\src\ga_operator.adb</vfs_file>
+    </file_marker>
+  </Project>
+</Locations>
