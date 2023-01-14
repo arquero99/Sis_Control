@@ -392,7 +392,7 @@ package body GA_operator is
          end loop;
 
          -- Finish AG when ...
-         exit when (Controller(0,1).Score < 10.0) or (Generation > 5000) ;
+         exit when (Controller(0,1).Score < 8) or (Generation > 5000) ;
 
          -- Prepare new generation in Controller(1,x)
 

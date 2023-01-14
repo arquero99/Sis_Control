@@ -20,7 +20,7 @@ RV NO_IMPLEMENTATION_ATTRIBUTES
 RV NO_IMPLEMENTATION_PRAGMAS
 RV NO_ELABORATION_CODE
 
-U ga_operator%b		ga_operator.adb		17fb5975 OO PK IL
+U ga_operator%b		ga_operator.adb		9b738ffb OO PK IL
 W ada%s			ada.ads			ada.ali
 Z ada.exceptions%s	a-except.adb		a-except.ali
 W ada.numerics%s	a-numeri.ads		a-numeri.ali
@@ -87,7 +87,7 @@ D a-tiinio.ads		20210520051130 390edddb ada.text_io.integer_io%s
 D a-tiinio.adb		20210520051130 b79731f4 ada.text_io.integer_io%b
 D a-unccon.ads		20210520051130 0e9b276f ada.unchecked_conversion%s
 D ga_operator.ads	20211112172608 59f41944 ga_operator%s
-D ga_operator.adb	20230114201130 8a9a8224 ga_operator%b
+D ga_operator.adb	20230114205300 061254aa ga_operator%b
 D interfac.ads		20210520051132 edec285f interfaces%s
 D i-cstrea.ads		20210520051132 e53d8b8e interfaces.c_streams%s
 D sim_types.ads		20211112172608 730f7bf6 sim_types%s
@@ -257,7 +257,7 @@ X 25 ga_operator.adb
 230b7 exist{boolean} 319m13 325m19 327r26 330r27
 232i11 x{integer} 320r26 333r23
 320i17 q{integer} 321r33 322r32 323r32
-340i7 Generation{integer} 355m10 355r24 357r14 369r17 395r55 429r11
+340i7 Generation{integer} 355m10 355r24 357r14 369r17 395r54 429r11
 341o7 Score{28|3O9} 363m59 364r41
 343b7 Changes{boolean} 378m10 383m19 390r27 391m13
 344r7 temp_controller{13R9} 384m19 386r40

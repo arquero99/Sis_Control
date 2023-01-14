@@ -11,6 +11,7 @@ package body Simulator_operator is
       Tp : integer;
       Tr, Ts : integer;
       Mp : Real;
+      first_Mp: Boolean:=true;
       Controller_reference : constant Real := 80.0;
       Expected_Tr : constant integer := 140; -- /12 ms
       Expected_Tp : constant integer := 507; -- /14 ms
@@ -90,8 +91,15 @@ package body Simulator_operator is
          if(Tr > 0) and (Tr < 2000) then
             for x in Tr..2000 loop
                if (speed(x) >= Controller_reference) and (speed(x) < speed(x-1)) then
-                  Mp := speed(x) - Controller_reference;
-                  exit;
+                  if first_Mp then
+                     Mp := speed(x) - Controller_reference;
+                     first_Mp:=false;
+                  else
+                     if (speed(x) - Controller_reference)>Mp then
+                        Mp:=Real(integer'Last/4);
+                     end if;
+                     --exit;
+                  end if;
                end if;
             end loop;
          end if;
