@@ -9,7 +9,7 @@ RV NO_DIRECT_BOOLEAN_OPERATORS
 RV NO_FIXED_POINT
 RV NO_IMPLEMENTATION_PRAGMAS
 
-U simulator_operator%b	simulator_operator.adb	c653af5e NE OO PK
+U simulator_operator%b	simulator_operator.adb	8f9c70fa NE OO PK
 W ada%s			ada.ads			ada.ali
 W ada.numerics%s	a-numeri.ads		a-numeri.ali
 W ada.numerics.elementary_functions%s  a-nuelfu.ads  a-nuelfu.ali
@@ -28,7 +28,7 @@ D controller.ads	20211112172608 a2acee14 controller%s
 D dc_motor_sim.ads	20211112172608 260425a3 dc_motor_sim%s
 D sim_types.ads		20211112172608 730f7bf6 sim_types%s
 D simulator_operator.ads  20211112172608 5938c7f4 simulator_operator%s
-D simulator_operator.adb  20230114132346 182b9e01 simulator_operator%b
+D simulator_operator.adb  20230114140534 51e441a5 simulator_operator%b
 D system.ads		20210520051136 2ffa5114 system%s
 D s-exctab.ads		20210520051132 54135002 system.exception_table%s
 D s-stalib.ads		20210520051134 472fbca8 system.standard_library%s
@@ -58,31 +58,31 @@ X 7 dc_motor_sim.ads
 13U17*Exec_cycle 10|35s20 50s23
 X 8 sim_types.ads
 1K9*sim_types 8e14 9|1w6 2r5
-3O9*Real 9|5r52 5r69 10|7r52 7r69 10r32 13r11 14r39 17r30 55r19 94r23 100r19
-. 100r49 100r79 100r109
+3O9*Real 9|5r52 5r69 10|7r52 7r69 10r32 13r11 14r39 17r30 55r19 94r23 101r19
+. 101r24 101r56 101r86 105r26
 X 9 simulator_operator.ads
-4K9*Simulator_operator 6l5 6e23 10|5b14 105l5 105t23
-5U14*Carry_out_a_simulation 5>37 5>41 5>45 5<58 10|7b14 103l8 103t30
+4K9*Simulator_operator 6l5 6e23 10|5b14 110l5 110t23
+5U14*Carry_out_a_simulation 5>37 5>41 5>45 5<58 10|7b14 108l8 108t30
 5o37 Kp{8|3O9} 10|7b37 22r23
 5o41 Ki{8|3O9} 10|7b41 22r27
 5o45 Kd{8|3O9} 10|7b45 22r31
-5o58 Score{8|3O9} 10|7b58 55m10 100m10
+5o58 Score{8|3O9} 10|7b58 55m10 101m10 103m13 103r20 105m13 105r20
 X 10 simulator_operator.adb
 8N7 pi
 9N7 euler
 10a7 speed(8|3O9) 29m10 38m10 41r14 41r55 62r16 62r27 69r17 69r54 78r46 87r17
 . 87r27 88r19 90r24
 11b7 abort_simulation{boolean} 42m13 54r10
-12i7 Tr{integer} 58m10 63m16 70m16 76r14 76r27 77r22 100r28
-12i11 Ts{integer} 79m19 83m13 100r118
-12i15 Tp{integer} 89m19 93m19 100r58
-13o7 Mp{8|3O9} 90m19 94m19 100r88
+12i7 Tr{integer} 58m10 63m16 70m16 76r14 76r27 77r22 101r34
+12i11 Ts{integer} 79m19 83m13 101r95
+12i15 Tp{integer} 89m19 93m19 101r65
+13o7 Mp{8|3O9} 90m19 94m19 102r14 105r36
 14o7 Controller_reference{8|3O9} 17r43 25r32 41r25 69r27 69r66 78r23 78r58
 . 88r29 90r33
-15i7 Expected_Tr{integer} 100r33
-16i7 Expected_Tp{integer} 100r63
-17o7 Expected_Mp{8|3O9} 100r93
-18i7 Expected_Ts{integer} 100r123
+15i7 Expected_Tr{integer} 101r39
+16i7 Expected_Tp{integer} 101r70
+17o7 Expected_Mp{8|3O9} 102r18 105r41
+18i7 Expected_Ts{integer} 101r100
 28i11 x{integer} 29r16
 37i11 x{integer} 38r16 41r20 41r61 46r15
 61i14 x{integer} 62r22 62r33

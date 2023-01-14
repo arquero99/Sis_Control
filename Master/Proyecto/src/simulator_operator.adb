@@ -60,7 +60,7 @@ package body Simulator_operator is
               -- In this case we penalize oscillations. Si llega a velocidad consigna se machaca este dato con Tr. Si no llega pone un valor muy alto.
          for x in 2..2000 loop
             if speed(x) < speed(x-1) then
-               Tr := integer'last/4;
+               Tr := integer'last/2;
                exit;
             end if;
          end loop;
@@ -91,14 +91,19 @@ package body Simulator_operator is
                   exit;
                else
                   Tp:=integer'last/4;
-                  Mp:=Real'last/4;
+                  Mp:=Real'last/2;
+                  --exit;
                end if;
             end if;
          end loop;
 
          -- A better score is a lower score
-         Score := Real(abs(Tr - Expected_Tr)) + Real(abs(Tp - Expected_Tp)) + Real(abs(Mp - Expected_Mp)) + Real(abs(Ts - Expected_Ts));
-
+         Score := Real(Real((abs(Tr - Expected_Tr))) + Real(abs(Tp - Expected_Tp)) + Real(abs(Ts - Expected_Ts)));
+         if (Mp<=Expected_Mp) then
+            Score:=Score/2;                         --Premio
+         else
+            Score:=Score+Real((abs(Mp - Expected_Mp)));
+         end if;
       end if;
    end Carry_out_a_simulation;
 
