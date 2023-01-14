@@ -31,9 +31,9 @@ package body GA_operator is
 
       for x in 1..Max_population loop
          loop
-            temp_controller.Kp := Real(Random(seed))*0.01;
-            temp_controller.Ki := Real(Random(seed))*0.00001;
-            temp_controller.Kd := 0.00001;
+            temp_controller.Kp := Real(Random(seed));
+            temp_controller.Ki := Real(Random(seed))*0.01;
+            temp_controller.Kd := Real(Random(seed))*0.0001;
             temp_controller.score := Real'last/2.0;
             temp_controller.evaluated := false;
 

@@ -46,7 +46,7 @@ package ada_main is
    pragma Export (C, u00002, "system__standard_libraryB");
    u00003 : constant Version_32 := 16#664ecad3#;
    pragma Export (C, u00003, "system__standard_libraryS");
-   u00004 : constant Version_32 := 16#1534169c#;
+   u00004 : constant Version_32 := 16#17fb5975#;
    pragma Export (C, u00004, "ga_operatorB");
    u00005 : constant Version_32 := 16#59f41944#;
    pragma Export (C, u00005, "ga_operatorS");
