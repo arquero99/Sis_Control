@@ -7,31 +7,58 @@ P ZX
 RN
 RV NO_DIRECT_BOOLEAN_OPERATORS
 RV NO_FIXED_POINT
+RV NO_IO
 RV NO_IMPLEMENTATION_PRAGMAS
 
-U simulator_operator%b	simulator_operator.adb	8f9c70fa NE OO PK
+U simulator_operator%b	simulator_operator.adb	19964f31 NE OO PK
 W ada%s			ada.ads			ada.ali
-W ada.numerics%s	a-numeri.ads		a-numeri.ali
-W ada.numerics.elementary_functions%s  a-nuelfu.ads  a-nuelfu.ali
+Z ada.strings.text_buffers%s  a-sttebu.adb	a-sttebu.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
 W controller%s		controller.adb		controller.ali
 W dc_motor_sim%s	dc_motor_sim.adb	dc_motor_sim.ali
+Z interfaces%s		interfac.ads		interfac.ali
+Z system.img_fixed_64%s	s-imfi64.ads		s-imfi64.ali
 
 U simulator_operator%s	simulator_operator.ads	2a37bc02 EE NE OO PK
+Z ada.strings.text_buffers%s  a-sttebu.adb	a-sttebu.ali
 W sim_types%s		sim_types.ads		sim_types.ali
 
 D ada.ads		20210520051132 76789da1 ada%s
-D a-numeri.ads		20210520051130 84bea7a3 ada.numerics%s
-D a-nuelfu.ads		20210520051130 03e83d1c ada.numerics.elementary_functions%s
-D a-ngelfu.ads		20210520051130 e6ec3af5 ada.numerics.generic_elementary_functions%s
+D a-except.ads		20210520051128 946f3014 ada.exceptions%s
+D a-ioexce.ads		20210520051128 e4a01f64 ada.io_exceptions%s
+D a-stream.ads		20210520051130 119b8fb3 ada.streams%s
+D a-string.ads		20210520051130 90ac6797 ada.strings%s
+D a-sttebu.ads		20210520051130 18209c64 ada.strings.text_buffers%s
+D a-stuten.ads		20210520051130 808c40ad ada.strings.utf_encoding%s
+D a-tags.ads		20210520051130 9eaa38c6 ada.tags%s
+D a-textio.ads		20210520051130 aef4d56d ada.text_io%s
 D a-unccon.ads		20210520051130 0e9b276f ada.unchecked_conversion%s
 D controller.ads	20211112172608 a2acee14 controller%s
 D dc_motor_sim.ads	20211112172608 260425a3 dc_motor_sim%s
+D interfac.ads		20210520051132 edec285f interfaces%s
+D i-cstrea.ads		20210520051132 e53d8b8e interfaces.c_streams%s
 D sim_types.ads		20211112172608 730f7bf6 sim_types%s
 D simulator_operator.ads  20211112172608 5938c7f4 simulator_operator%s
-D simulator_operator.adb  20230114140534 51e441a5 simulator_operator%b
+D simulator_operator.adb  20230114162916 6af2961f simulator_operator%b
 D system.ads		20210520051136 2ffa5114 system%s
+D s-arit64.ads		20210520051132 5f88d2b0 system.arith_64%s
+D s-crtl.ads		20210520051132 0ebbdb71 system.crtl%s
 D s-exctab.ads		20210520051132 54135002 system.exception_table%s
+D s-ficobl.ads		20210520051132 078245e4 system.file_control_block%s
+D s-imagef.ads		20210520051134 019cdf69 system.image_f%s
+D s-imfi64.ads		20210520051134 dbac59b3 system.img_fixed_64%s
+D s-parame.ads		20210520051134 4752c4cb system.parameters%s
+D s-putima.ads		20210520051134 4e095881 system.put_images%s
+D s-secsta.ads		20210520051134 9b3ab94b system.secondary_stack%s
+D s-soflin.ads		20210520051134 a7318a92 system.soft_links%s
+D s-stache.ads		20210520051134 a37c21ec system.stack_checking%s
 D s-stalib.ads		20210520051134 472fbca8 system.standard_library%s
+D s-stoele.ads		20210520051134 2dc34a04 system.storage_elements%s
+D s-stoele.adb		20210520051134 ed88f8fb system.storage_elements%b
+D s-traent.ads		20210520051134 26a8d361 system.traceback_entries%s
+D s-unstyp.ads		20210520051134 2b077493 system.unsigned_types%s
+D s-wchcon.ads		20210520051136 1b7d22d2 system.wch_con%s
+D unchconv.ads		20210520051136 ca2f9e18 unchecked_conversion%s
 G a e
 G c Z s b [carry_out_a_simulation simulator_operator 5 14 none]
 G r c none [carry_out_a_simulation simulator_operator 5 14 none] [init dc_motor_sim 7 17 none]
@@ -41,52 +68,52 @@ G r c none [carry_out_a_simulation simulator_operator 5 14 none] [exec_controlle
 G r c none [carry_out_a_simulation simulator_operator 5 14 none] [exec_cycle dc_motor_sim 13 17 none]
 G r c none [carry_out_a_simulation simulator_operator 5 14 none] [give_me_speed dc_motor_sim 11 16 none]
 X 1 ada.ads
-16K9*Ada 20e8 10|1r32 2r5
-X 2 a-numeri.ads
-16K13*Numerics 35e17 10|1r36 2r9
-X 3 a-nuelfu.ads
-18K22*Elementary_Functions[4|39] 10|1w45 2r18
-X 6 controller.ads
-4K9*Controller 17e15 10|1w20 22r7 25r7 34r7 48r13
-6U14*Init 10|22s18
-8U14*Set_reference 10|25s18
-10U14*Exec_controller_cycle 10|34s18 48s24
-X 7 dc_motor_sim.ads
-4K9*DC_motor_sim 15e17 10|1w6 21r7 35r7 38r22 50r10
-7U17*init 10|21s20
-11V16*Give_me_speed{8|3O9} 10|38s35
-13U17*Exec_cycle 10|35s20 50s23
-X 8 sim_types.ads
-1K9*sim_types 8e14 9|1w6 2r5
-3O9*Real 9|5r52 5r69 10|7r52 7r69 10r32 13r11 14r39 17r30 55r19 94r23 101r19
-. 101r24 101r56 101r86 105r26
-X 9 simulator_operator.ads
-4K9*Simulator_operator 6l5 6e23 10|5b14 110l5 110t23
-5U14*Carry_out_a_simulation 5>37 5>41 5>45 5<58 10|7b14 108l8 108t30
-5o37 Kp{8|3O9} 10|7b37 22r23
-5o41 Ki{8|3O9} 10|7b41 22r27
-5o45 Kd{8|3O9} 10|7b45 22r31
-5o58 Score{8|3O9} 10|7b58 55m10 101m10 103m13 103r20 105m13 105r20
-X 10 simulator_operator.adb
-8N7 pi
-9N7 euler
-10a7 speed(8|3O9) 29m10 38m10 41r14 41r55 62r16 62r27 69r17 69r54 78r46 87r17
-. 87r27 88r19 90r24
-11b7 abort_simulation{boolean} 42m13 54r10
-12i7 Tr{integer} 58m10 63m16 70m16 76r14 76r27 77r22 101r34
-12i11 Ts{integer} 79m19 83m13 101r95
-12i15 Tp{integer} 89m19 93m19 101r65
-13o7 Mp{8|3O9} 90m19 94m19 102r14 105r36
-14o7 Controller_reference{8|3O9} 17r43 25r32 41r25 69r27 69r66 78r23 78r58
-. 88r29 90r33
-15i7 Expected_Tr{integer} 101r39
-16i7 Expected_Tp{integer} 101r70
-17o7 Expected_Mp{8|3O9} 102r18 105r41
-18i7 Expected_Ts{integer} 101r100
+16K9*Ada 20e8 17|1r32 2r5
+X 9 a-textio.ads
+58K13*Text_IO 725e16 17|1w36 2r9
+262U14*New_Line 17|108s10
+463U14*Put 17|107s10
+X 11 controller.ads
+4K9*Controller 17e15 17|1w20 22r7 25r7 34r7 48r13
+6U14*Init 17|22s18
+8U14*Set_reference 17|25s18
+10U14*Exec_controller_cycle 17|34s18 48s24
+X 12 dc_motor_sim.ads
+4K9*DC_motor_sim 15e17 17|1w6 21r7 35r7 38r22 50r10
+7U17*init 17|21s20
+11V16*Give_me_speed{15|3O9} 17|38s35
+13U17*Exec_cycle 17|35s20 50s23
+X 13 interfac.ads
+55I9*Integer_64<long_long_integer>
+X 15 sim_types.ads
+1K9*sim_types 8e14 16|1w6 2r5
+3O9*Real 16|5r52 5r69 17|7r52 7r69 9r32 13r12 14r39 17r30 55r19 107r21 112r19
+. 112r49 112r79 112r109
+X 16 simulator_operator.ads
+4K9*Simulator_operator 6l5 6e23 17|5b14 117l5 117t23
+5U14*Carry_out_a_simulation 5>37 5>41 5>45 5<58 17|7b14 115l8 115t30
+5o37 Kp{15|3O9} 17|7b37 22r23
+5o41 Ki{15|3O9} 17|7b41 22r27
+5o45 Kd{15|3O9} 17|7b45 22r31
+5o58 Score{15|3O9} 17|7b58 55m10 112m10
+X 17 simulator_operator.adb
+9a7 speed(15|3O9) 29m10 38m10 41r14 41r55 68r16 68r28 70r22 76r20 76r59 95r46
+10b7 abort_simulation{boolean} 42m13 54r10
+11i7 Tp{integer} 69m16 75r33 94r22 112r88
+12i7 Tr{integer} 58m10 74r13 77m19 93r14 93r27 112r28
+12i11 Ts{integer} 96m19 101m13 112r58
+13o7 Mp{15|3O9} 70m16 107r32 112r118
+14o7 Controller_reference{15|3O9} 17r43 25r32 41r25 76r32 76r73 95r23 95r59
+15i7 Expected_Tr{integer} 112r33
+16i7 Expected_Tp{integer} 112r93
+17o7 Expected_Mp{15|3O9} 112r123
+18i7 Expected_Ts{integer} 112r63
 28i11 x{integer} 29r16
 37i11 x{integer} 38r16 41r20 41r61 46r15
-61i14 x{integer} 62r22 62r33
-68i14 x{integer} 69r23 69r60 70r20
-77i17 x{integer} 78r52 79r25
-86i14 x{integer} 87r23 87r33 88r25 89r23 90r30
+67i14 x{integer} 68r22 68r34 69r22 70r28
+75i17 x{integer} 76r26 76r65 77r25
+94i17 x{integer} 95r52 96r25
+X 19 s-arit64.ads
+44I12*Int64{13|55I9}
+54V13*Multiply_With_Ovflo_Check64{44I12} 55i<c,__gnat_mulv64>22
 

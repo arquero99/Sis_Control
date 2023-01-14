@@ -34,8 +34,8 @@ package body ada_main is
    E107 : Short_Integer; pragma Import (Ada, E107, "ada__calendar_E");
    E125 : Short_Integer; pragma Import (Ada, E125, "ada__text_io_E");
    E105 : Short_Integer; pragma Import (Ada, E105, "system__random_seed_E");
-   E157 : Short_Integer; pragma Import (Ada, E157, "dc_motor_sim_E");
-   E155 : Short_Integer; pragma Import (Ada, E155, "controller_E");
+   E148 : Short_Integer; pragma Import (Ada, E148, "dc_motor_sim_E");
+   E146 : Short_Integer; pragma Import (Ada, E146, "controller_E");
    E144 : Short_Integer; pragma Import (Ada, E144, "simulator_operator_E");
    E005 : Short_Integer; pragma Import (Ada, E005, "ga_operator_E");
 
@@ -222,8 +222,8 @@ package body ada_main is
       E125 := E125 + 1;
       System.Random_Seed'Elab_Body;
       E105 := E105 + 1;
-      E157 := E157 + 1;
-      E155 := E155 + 1;
+      E148 := E148 + 1;
+      E146 := E146 + 1;
       E144 := E144 + 1;
       ga_operator'elab_body;
       E005 := E005 + 1;
@@ -275,7 +275,6 @@ package body ada_main is
    --   -LE:/programas/gnat/lib/gcc/x86_64-w64-mingw32/10.3.1/adalib/
    --   -static
    --   -lgnat
-   --   -lm
    --   -Wl,--stack=0x2000000
 --  END Object file/option list   
 

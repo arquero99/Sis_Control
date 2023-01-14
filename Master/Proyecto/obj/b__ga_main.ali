@@ -18,12 +18,12 @@ RV NO_IMPLICIT_LOOPS
 RV NO_ELABORATION_CODE
 RV NO_OBSOLESCENT_FEATURES
 
-U ada_main%b		b__ga_main.adb		acba5270 OO PK IL
+U ada_main%b		b__ga_main.adb		de3afed5 OO PK IL
 W ada%s			ada.ads			ada.ali
 W ada.exceptions%s	a-except.adb		a-except.ali
 Z system%s		system.ads		system.ali
 
-U ada_main%s		b__ga_main.ads		4b7e4957 EE NE OO PK IL
+U ada_main%s		b__ga_main.ads		d8c839ca EE NE OO PK IL
 W system%s		system.ads		system.ali
 W system.parameters%s	s-parame.adb		s-parame.ali
 W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
@@ -31,8 +31,8 @@ W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
 D ada.ads		20210520051132 76789da1 ada%s
 D a-except.ads		20210520051128 946f3014 ada.exceptions%s
 D a-unccon.ads		20210520051130 0e9b276f ada.unchecked_conversion%s
-D b__ga_main.ads	20230114140536 b8ec65c3 ada_main%s
-D b__ga_main.adb	20230114140536 803907a7 ada_main%b
+D b__ga_main.ads	20230114162918 2b5a155e ada_main%s
+D b__ga_main.adb	20230114162918 610fdb9f ada_main%b
 D system.ads		20210520051136 2ffa5114 system%s
 D s-parame.ads		20210520051134 4752c4cb system.parameters%s
 D s-secsta.ads		20210520051134 9b3ab94b system.secondary_stack%s
@@ -51,7 +51,7 @@ X 1 ada.ads
 X 2 a-except.ads
 44K13*Exceptions 289e19 5|6w10
 X 4 b__ga_main.ads
-6K9*ada_main 626l5 626e13 5|8b14 282l5 282t13
+6K9*ada_main 599l5 599e13 5|8b14 281l5 281t13
 8i4*gnat_argc{integer} 12m22 12r22 5|252r10 253m10
 9m4*gnat_argv{6|67M9} 13m22 13r22 5|254m10
 10m4*gnat_envp{6|67M9} 14m22 14r22 5|256m7
@@ -81,8 +81,7 @@ X 4 b__ga_main.ads
 . 331r22 333r22 335r22 337r22 339r22 341r22 343r22 345r22 347r22 349r22 351r22
 . 353r22 355r22 357r22 359r22 361r22 363r22 365r22 367r22 369r22 371r22 373r22
 . 375r22 377r22 379r22 381r22 383r22 385r22 387r22 389r22 391r22 393r22 395r22
-. 397r22 399r22 401r22 403r22 405r22 407r22 409r22 411r22 413r22 415r22 417r22
-. 419r22 421r22 423r22 425r22 427r22
+. 397r22 399r22 401r22 403r22 405r22 407r22 409r22
 43m4*u00001{42M9} 44r22
 45m4*u00002{42M9} 46r22
 47m4*u00003{42M9} 48r22
@@ -267,15 +266,6 @@ X 4 b__ga_main.ads
 405m4*u00182{42M9} 406r22
 407m4*u00183{42M9} 408r22
 409m4*u00184{42M9} 410r22
-411m4*u00185{42M9} 412r22
-413m4*u00186{42M9} 414r22
-415m4*u00187{42M9} 416r22
-417m4*u00188{42M9} 418r22
-419m4*u00189{42M9} 420r22
-421m4*u00190{42M9} 422r22
-423m4*u00191{42M9} 424r22
-425m4*u00192{42M9} 426r22
-427m4*u00193{42M9} 428r22
 X 5 b__ga_main.adb
 10i4 E069{short_integer} 10m46 10r46 189m7 189r15
 11i4 E008{short_integer} 11m46 11r46 195m7 195r15
@@ -304,8 +294,8 @@ X 5 b__ga_main.adb
 34i4 E107{short_integer} 34m46 34r46 219m7 219r15
 35i4 E125{short_integer} 35m46 35r46 51m7 51r15 222m7 222r15
 36i4 E105{short_integer} 36m46 36r46 224m7 224r15
-37i4 E157{short_integer} 37m46 37r46 225m7 225r15
-38i4 E155{short_integer} 38m46 38r46 226m7 226r15
+37i4 E148{short_integer} 37m46 37r46 225m7 225r15
+38i4 E146{short_integer} 38m46 38r46 226m7 226r15
 39i4 E144{short_integer} 39m46 39r46 227m7 227r15
 40i4 E005{short_integer} 40m46 40r46 229m7 229r15
 42a4 Sec_Default_Sized_Stacks(8|45R9) 160m32 160r32

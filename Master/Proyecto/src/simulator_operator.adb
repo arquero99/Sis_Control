@@ -1,22 +1,22 @@
-with DC_motor_sim, Controller, Ada.Numerics.Elementary_Functions;
-use Ada.Numerics.Elementary_Functions;
+with DC_motor_sim, Controller, Ada.Text_IO;
+use Ada.Text_IO;
 
 
 package body Simulator_operator is
 
    procedure Carry_out_a_simulation(Kp, Ki, Kd: in Real; Score: out Real) is
-      pi: constant := 3.141592;
-      euler: constant:=2.71828;
+
       speed: array(1..2000) of Real; -- Samples during 0.2s
       abort_simulation : boolean := false;
-      Tr, Ts, Tp : integer;
-      Mp :Real;
+      Tp : integer;
+      Tr, Ts : integer;
+      Mp : Real;
       Controller_reference : constant Real := 80.0;
-      Expected_Tr : constant integer := 140; -- /14 ms
-      Expected_Tp : constant integer := 507; -- /506.5 ms
-      Expected_Mp : constant Real := 0.07*Controller_reference; -- 7%
-      Expected_Ts : constant integer := 762; --/ 761.867 ms
-    begin
+      Expected_Tr : constant integer := 140; -- /12 ms
+      Expected_Tp : constant integer := 507; -- /14 ms
+      Expected_Mp : constant Real := 1.07*Controller_reference; -- 7%
+      Expected_Ts : constant integer := 762; --/10 ms
+   begin
       -- Init motor simulator and speed controller
       Dc_motor_sim.init;
       Controller.Init(Kp, Ki, Kd);
@@ -56,55 +56,62 @@ package body Simulator_operator is
       else
          -- Look for rise time
          Tr := 0;
+         -- In this case we penalize oscillations
+         --for x in 2..2000 loop
+           -- if speed(x) < speed(x-1) then
+             --  Tr := integer'last/4;
+               --exit;
+            --end if;
+         --end loop;
 
-              -- In this case we penalize oscillations. Si llega a velocidad consigna se machaca este dato con Tr. Si no llega pone un valor muy alto.
          for x in 2..2000 loop
-            if speed(x) < speed(x-1) then
-               Tr := integer'last/2;
-               exit;
+            if speed(x) <= speed(x-1) then
+               Tp := x-1;
+               Mp := speed(x-1);
             end if;
          end loop;
 
-         for x in 2..2000 loop
-            if (speed(x)>=Controller_reference) and (speed(x-1)<=Controller_reference) then
-               Tr:=x;
-               exit;
-            end if;
-         end loop;
+         if Tr = 0 then
+            for x in reverse 2..Tp loop
+               if (speed(x) >= Controller_reference) and (speed(x-1) <= Controller_reference)  then
+                  Tr := x;
+                  exit;
+               end if;
+            end loop;
+         end if;
 
-         -- Look for settling time. Solo se ejecuta en caso de que se halla llegado (No se ha aplicado penalizacion)
+         -- Look for settling time
+         --if (Tr > 0) and (Tr < 2000) then
+         --   for x in 2..2000 loop
+         --      if speed(x) <= speed(x-1) then
+         --         Tp := x;
+         --         Mp := speed(x)-Controller_reference;
+         --     end if;
+         --   end loop;
+         --end if;
+
          if (Tr > 0) and (Tr < 2000) then
-            for x in Tr..2000 loop
-               if abs(Controller_reference - speed(x)) > Controller_reference*0.02 then
+            for x in Tp..1995 loop
+               if abs(Controller_reference - speed(x)) <= Controller_reference*0.02 then
                   Ts := x;
+                  exit;
                end if;
             end loop;
          else
-            Ts := integer'Last/4; --Penalizacion para Ts
+            Ts := integer'Last/4;
          end if;
 
-         for x in 2..2000 loop                                --Entra independientemente de la penalizacion
-            if (speed(x)<=speed(x-1)) then
-               if(speed(x)>=Controller_reference) then
-                  Tp:=x;
-                  Mp:=(speed(x)-Controller_reference);
-                  exit;
-               else
-                  Tp:=integer'last/4;
-                  Mp:=Real'last/2;
-                  --exit;
-               end if;
-            end if;
-         end loop;
-
+         --Put(String(Integer'Image(Tr)));
+         --Put(String(Integer'Image(Tp)));
+         --Put(String(Integer'Image(Ts)));
+         Put(String(Real'Image(Mp)));
+         new_line;
+         --Put(String(Real'Image(Real(abs(Expected_Mp)))));
+         ---Put(String(Integer'Image(Expected_Tr)));
          -- A better score is a lower score
-         Score := Real(Real((abs(Tr - Expected_Tr))) + Real(abs(Tp - Expected_Tp)) + Real(abs(Ts - Expected_Ts)));
-         if (Mp<=Expected_Mp) then
-            Score:=Score/2;                         --Premio
-         else
-            Score:=Score+Real((abs(Mp - Expected_Mp)));
-         end if;
+         Score := Real(abs(Tr - Expected_Tr)) + Real(abs(Ts - Expected_Ts)) + Real(abs(Tp - Expected_Tp)) + Real(abs(Mp - Expected_Mp));
       end if;
+
    end Carry_out_a_simulation;
 
 end Simulator_operator;
