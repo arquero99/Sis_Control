@@ -7,17 +7,14 @@ P ZX
 RN
 RV NO_DIRECT_BOOLEAN_OPERATORS
 RV NO_FIXED_POINT
-RV NO_FLOATING_POINT
 RV NO_IMPLEMENTATION_PRAGMAS
 
-U simulator_operator%b	simulator_operator.adb	960c1e13 NE OO PK
+U simulator_operator%b	simulator_operator.adb	c653af5e NE OO PK
 W ada%s			ada.ads			ada.ali
 W ada.numerics%s	a-numeri.ads		a-numeri.ali
 W ada.numerics.elementary_functions%s  a-nuelfu.ads  a-nuelfu.ali
 W controller%s		controller.adb		controller.ali
 W dc_motor_sim%s	dc_motor_sim.adb	dc_motor_sim.ali
-Z interfaces%s		interfac.ads		interfac.ali
-Z system.arith_64%s	s-arit64.adb		s-arit64.ali
 
 U simulator_operator%s	simulator_operator.ads	2a37bc02 EE NE OO PK
 W sim_types%s		sim_types.ads		sim_types.ali
@@ -29,12 +26,10 @@ D a-ngelfu.ads		20210520051130 e6ec3af5 ada.numerics.generic_elementary_function
 D a-unccon.ads		20210520051130 0e9b276f ada.unchecked_conversion%s
 D controller.ads	20211112172608 a2acee14 controller%s
 D dc_motor_sim.ads	20211112172608 260425a3 dc_motor_sim%s
-D interfac.ads		20210520051132 edec285f interfaces%s
 D sim_types.ads		20211112172608 730f7bf6 sim_types%s
 D simulator_operator.ads  20211112172608 5938c7f4 simulator_operator%s
-D simulator_operator.adb  20230112203446 48742f4c simulator_operator%b
+D simulator_operator.adb  20230114132346 182b9e01 simulator_operator%b
 D system.ads		20210520051136 2ffa5114 system%s
-D s-arit64.ads		20210520051132 5f88d2b0 system.arith_64%s
 D s-exctab.ads		20210520051132 54135002 system.exception_table%s
 D s-stalib.ads		20210520051134 472fbca8 system.standard_library%s
 G a e
@@ -46,64 +41,52 @@ G r c none [carry_out_a_simulation simulator_operator 5 14 none] [exec_controlle
 G r c none [carry_out_a_simulation simulator_operator 5 14 none] [exec_cycle dc_motor_sim 13 17 none]
 G r c none [carry_out_a_simulation simulator_operator 5 14 none] [give_me_speed dc_motor_sim 11 16 none]
 X 1 ada.ads
-16K9*Ada 20e8 11|1r32 2r5
+16K9*Ada 20e8 10|1r32 2r5
 X 2 a-numeri.ads
-16K13*Numerics 35e17 11|1r36 2r9
+16K13*Numerics 35e17 10|1r36 2r9
 X 3 a-nuelfu.ads
-18K22*Elementary_Functions[4|39] 11|1w45 2r18
-X 4 a-ngelfu.ads
-52V13*Sqrt{float} 11|97s18[3|18]
-75V13*Log{float} 11|93s36[3|18]
-86V14*"**"{float} 11|99s30[3|18]
+18K22*Elementary_Functions[4|39] 10|1w45 2r18
 X 6 controller.ads
-4K9*Controller 17e15 11|1w20 26r7 29r7 38r7 52r13
-6U14*Init 11|26s18
-8U14*Set_reference 11|29s18
-10U14*Exec_controller_cycle 11|38s18 52s24
+4K9*Controller 17e15 10|1w20 22r7 25r7 34r7 48r13
+6U14*Init 10|22s18
+8U14*Set_reference 10|25s18
+10U14*Exec_controller_cycle 10|34s18 48s24
 X 7 dc_motor_sim.ads
-4K9*DC_motor_sim 15e17 11|1w6 25r7 39r7 42r22 54r10
-7U17*init 11|25s20
-11V16*Give_me_speed{9|3O9} 11|42s35
-13U17*Exec_cycle 11|39s20 54s23
-X 8 interfac.ads
-55I9*Integer_64<long_long_integer>
-X 9 sim_types.ads
-1K9*sim_types 8e14 10|1w6 2r5
-3O9*Real 10|5r52 5r69 11|7r52 7r69 11r32 13r12 15r22 16r21 18r39 21r30 59r19
-. 94r14 95r14 97r13 98r14 99r14 102r19 102r49 102r78 102r107 102r121
-X 10 simulator_operator.ads
-4K9*Simulator_operator 6l5 6e23 11|5b14 107l5 107t23
-5U14*Carry_out_a_simulation 5>37 5>41 5>45 5<58 11|7b14 105l8 105t30
-5o37 Kp{9|3O9} 11|7b37 26r23
-5o41 Ki{9|3O9} 11|7b41 26r27
-5o45 Kd{9|3O9} 11|7b45 26r31
-5o58 Score{9|3O9} 11|7b58 59m10 102m10
-X 11 simulator_operator.adb
-9N7 pi 93r67 95r19 99r53
-10N7 euler 99r24
-11a7 speed(9|3O9) 33m10 42m10 45r14 45r55 65r16 65r27 73r19 82r46
-12b7 abort_simulation{boolean} 46m13 58r10
-13o7 Tp{9|3O9} 95m10 102r116
-14i7 Tr{integer} 62m10 66m16 71r13 74m19 80r14 80r27 81r22 102r28
-14i11 Ts{integer} 83m19 87m13 92r17 102r58
-15o7 Tp_value{9|3O9}
-15o17 Mp{9|3O9} 99m10 102r87
-16o7 O{9|3O9} 92m10 93r25 97r29 97r58 98r20 99r46
-16o10 Wd{9|3O9} 94m10 95r22 99r48
-16o14 Wn{9|3O9} 98m10
-16o18 S{9|3O9} 97m10 98r22
-17f7 Wd_aux{float} 93m10 94r19 97r33 97r40
-18o7 Controller_reference{9|3O9} 21r43 29r32 45r25 73r30 82r23 82r58
-19i7 Expected_Tr{integer} 102r33
-20i7 Expected_Tp{integer} 102r126
-21o7 Expected_Mp{9|3O9} 93r46 102r92
-22i7 Expected_Ts{integer} 102r63
-32i11 x{integer} 33r16
-41i11 x{integer} 42r16 45r20 45r61 50r15
-64i14 x{integer} 65r22 65r33
-72i17 x{integer} 73r25 74r25
-81i17 x{integer} 82r52 83r25
-X 13 s-arit64.ads
-44I12*Int64{8|55I9}
-54V13*Multiply_With_Ovflo_Check64{44I12} 55i<c,__gnat_mulv64>22
+4K9*DC_motor_sim 15e17 10|1w6 21r7 35r7 38r22 50r10
+7U17*init 10|21s20
+11V16*Give_me_speed{8|3O9} 10|38s35
+13U17*Exec_cycle 10|35s20 50s23
+X 8 sim_types.ads
+1K9*sim_types 8e14 9|1w6 2r5
+3O9*Real 9|5r52 5r69 10|7r52 7r69 10r32 13r11 14r39 17r30 55r19 94r23 100r19
+. 100r49 100r79 100r109
+X 9 simulator_operator.ads
+4K9*Simulator_operator 6l5 6e23 10|5b14 105l5 105t23
+5U14*Carry_out_a_simulation 5>37 5>41 5>45 5<58 10|7b14 103l8 103t30
+5o37 Kp{8|3O9} 10|7b37 22r23
+5o41 Ki{8|3O9} 10|7b41 22r27
+5o45 Kd{8|3O9} 10|7b45 22r31
+5o58 Score{8|3O9} 10|7b58 55m10 100m10
+X 10 simulator_operator.adb
+8N7 pi
+9N7 euler
+10a7 speed(8|3O9) 29m10 38m10 41r14 41r55 62r16 62r27 69r17 69r54 78r46 87r17
+. 87r27 88r19 90r24
+11b7 abort_simulation{boolean} 42m13 54r10
+12i7 Tr{integer} 58m10 63m16 70m16 76r14 76r27 77r22 100r28
+12i11 Ts{integer} 79m19 83m13 100r118
+12i15 Tp{integer} 89m19 93m19 100r58
+13o7 Mp{8|3O9} 90m19 94m19 100r88
+14o7 Controller_reference{8|3O9} 17r43 25r32 41r25 69r27 69r66 78r23 78r58
+. 88r29 90r33
+15i7 Expected_Tr{integer} 100r33
+16i7 Expected_Tp{integer} 100r63
+17o7 Expected_Mp{8|3O9} 100r93
+18i7 Expected_Ts{integer} 100r123
+28i11 x{integer} 29r16
+37i11 x{integer} 38r16 41r20 41r61 46r15
+61i14 x{integer} 62r22 62r33
+68i14 x{integer} 69r23 69r60 70r20
+77i17 x{integer} 78r52 79r25
+86i14 x{integer} 87r23 87r33 88r25 89r23 90r30
 
