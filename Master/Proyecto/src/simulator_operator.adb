@@ -14,8 +14,8 @@ package body Simulator_operator is
       Controller_reference : constant Real := 80.0;
       Expected_Tr : constant integer := 140; -- /12 ms
       Expected_Tp : constant integer := 507; -- /14 ms
-      Expected_Mp : constant Real := 1.07*Controller_reference; -- 7%
-      Expected_Ts : constant integer := 762; --/10 ms
+      Expected_Mp : constant Real := 0.07*Controller_reference; -- 7%
+      Expected_Ts : constant integer := 769; --/10 ms
    begin
       -- Init motor simulator and speed controller
       Dc_motor_sim.init;
@@ -56,65 +56,45 @@ package body Simulator_operator is
       else
          -- Look for rise time
          Tr := 0;
-         -- In this case we penalize oscillations
-         --for x in 2..2000 loop
-           -- if speed(x) < speed(x-1) then
-             --  Tr := integer'last/4;
-               --exit;
-            --end if;
-         --end loop;
 
          if Tr = 0 then
             for x in 2..2000 loop
-               if (speed(x) >= Controller_reference) and (speed(x-1) <= Controller_reference)  then
+               if (speed(x) >= Controller_reference) and (speed(x-1) <= Controller_reference) then
                   Tr := x;
-                  exit;
                end if;
             end loop;
-            --Añadir penalizacion si Tr=0
          end if;
 
-         if Tr=0 then
-            Tr := integer'last/4;
+         -- Set Tp
+         if (Tr > 0) and (Tr < 2000) then
+            for x in Tr..2000 loop
+               if speed(x) <= speed(x-1) then
+                  Tp := x;
+               end if;
+            end loop;
          end if;
 
-         for x in Tr..2000 loop
-            if (speed(x) <= speed(x-1)) then
-               Tp := x-1;
-               Mp := speed(x-1);
-            end if;
-         end loop;
 
          -- Look for settling time
-         --if (Tr > 0) and (Tr < 2000) then
-         --   for x in 2..2000 loop
-         --      if speed(x) <= speed(x-1) then
-         --         Tp := x;
-         --         Mp := speed(x)-Controller_reference;
-         --     end if;
-         --   end loop;
-         --end if;
-
-         if (Tr > 0) and (Tr < 2000) then
-            for x in Tp..2000 loop
+         if (Tp > 0) and (Tp < 2000) then
+            for x in reverse Tp..2000 loop
                if abs(Controller_reference - speed(x)) <= Controller_reference*0.02 then
                   Ts := x;
-                  exit;
                end if;
             end loop;
          else
             Ts := integer'Last/4;
          end if;
 
-         new_line;
-         --Put(String(Integer'Image(Tr)));
-         --Put(String(Integer'Image(Tp)));
-         --Put(String(Integer'Image(Ts)));
-         Put(String(Real'Image(Mp)));
-         --Put(String(Real'Image(Real(abs(Expected_Mp)))));
-         ---Put(String(Integer'Image(Expected_Tr)));
-         -- A better score is a lower score
-         new_line;
+         -- Set Mp
+         if(Tr > 0) and (Tr < 2000) then
+            for x in Tr..2000 loop
+               if (speed(x) >= Controller_reference) and (speed(x) < speed(x-1)) then
+                  Mp := speed(x) - Controller_reference;
+                  exit;
+               end if;
+            end loop;
+         end if;
 
          Score := Real(abs(Tr - Expected_Tr)) + Real(abs(Ts - Expected_Ts)) + Real(abs(Tp - Expected_Tp)) + Real(abs(Mp - Expected_Mp));
       end if;
