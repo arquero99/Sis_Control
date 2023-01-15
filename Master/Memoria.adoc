@@ -14,16 +14,16 @@ El sistema a controlar es un motor DC, el cual se utiliza en una amplia variedad
 
 En términos técnicos, un motor DC es un tipo de motor eléctrico que funciona con corriente continua. Esto significa que la corriente eléctrica que alimenta al motor fluye en una sola dirección, lo que permite un control preciso de la velocidad del motor.
 
-En el caso específico del sistema que se está controlando, se espera que el motor alcance una velocidad de referencia de 80 RPM (revoluciones por minuto). Para lograr esto, se utilizará un controlador PID (proporcional-integral-derivativo).
+En el caso específico del sistema que se está controlando, se espera que el motor alcance una velocidad angular de referencia de 80 rad/s (radianes por segundo). Para lograr esto, se utilizará un controlador PID (proporcional-integral-derivativo).
 
 
 == Descripción del algoritmo de control a utilizar.
 
 El controlador PID se compone de tres componentes: el componente proporcional, el componente integral y el componente derivativo. Cada uno de estos componentes tiene un efecto diferente en el sistema de control y se ajustan mediante tres parámetros, Kp, Ki y Kd respectivamente.
 
-El componente proporcional tiene un efecto directo en la salida del controlador, proporcional al error entre la referencia y la medición del sistema. El componente integral tiene un efecto acumulativo en la salida del controlador, corrigiendo los errores residuales a lo largo del tiempo. El componente derivativo tiene un efecto anticipativo en la salida del controlador, anticipando los cambios futuros en el error del sistema.
+El componente proporcional tiene un efecto directo en la salida del controlador, proporcional al error entre la referencia y la medición del sistema. El componente integral tiene un efecto acumulativo en la salida del controlador, corrigiendo los errores residuales a lo largo del tiempo, por lo que afecta principalmente al comportamiento del sistema en régimen permanente. El componente derivativo tiene un efecto anticipativo en la salida del controlador, anticipando los cambios futuros en el error del sistema, por lo que afecta principalmente al error producido en régimen transitorio.
 
-En la solución proporcionada, se inicializa el controlador PID con los valores Kp, Ki y Kd proporcionados como parámetros de entrada. Luego, en cada ciclo de simulación, el controlador PID ejecuta sus tres componentes y ajusta la salida del controlador en consecuencia. Esta salida es luego utilizada para actualizar el estado del sistema simulado, en este caso la velocidad del motor DC.
+En la solución proporcionada, se inicializa el controlador PID con los valores Kp, Ki y Kd proporcionados como parámetros de entrada. Luego, en cada ciclo de simulación, el controlador PID ejecuta la simulacion tomando estas tres componentes como valores del PID y ajusta la salida del controlador en consecuencia. La diferencia entre esta salida y la consigna establecida es el error, que es luego utilizado para actualizar el estado del sistema simulado, en este caso la velocidad del motor DC.
 
 == Descripción del procedimiento de ajuste del controlador por medio de un AG.
 El procedimiento de ajuste del controlador por medio de un AG se refiere al proceso de optimizar los parámetros del controlador utilizando un algoritmo genético. El algoritmo genético es un enfoque de optimización basado en la evolución natural, en el que una población de soluciones candidatas es sometida a procesos de selección, cruce y mutación para generar una nueva población en cada generación. El objetivo es encontrar la solución óptima para el problema de optimización.
@@ -31,40 +31,74 @@ El procedimiento de ajuste del controlador por medio de un AG se refiere al proc
 En este caso, los parámetros del controlador a optimizar son Kp, Ki y Kd, que son los tres parámetros utilizados en el algoritmo de control PID. Estos parámetros afectan directamente a la respuesta del sistema controlado y su optimización es esencial para lograr un desempeño óptimo del controlador.
 
 === Forma de generar la población inicial.
-La población consta de 2000 individios que se genera de forma aleatoria. Cada individuo de la población se representa mediante un cromosoma, el cual contiene los valores de los parámetros Kp, Ki y Kd. Los valores de estos parámetros están limitados dentro de un rango específico para evitar valores extremos.
+La población consta de 2000 individios, y los parámetros Kp y Ki se generan de forma aleatoria para estos individuos, tomando valores entre 0 y 0.01 para Kp, y entre 0 y 0.00001 para Ki. Los valores de Kd se inicializan siempre a 0.00001. Cada individuo de la población se representa mediante un cromosoma, el cual contiene los valores de los parámetros Kp, Ki y Kd. Los valores de estos parámetros están limitados dentro de un rango específico para evitar valores extremos, no representativos de soluciones válidas.
+Se ha probado a realizar cambios en la generación de estos valores aleatorios para ajustarlos más a los valores que resultan tras la ejecución de la simulación. De esta manera, se obtienen resultados válidos en menos generaciones, pero el árbol de posibles soluciones se reduce, disminuyendo así la diversidad de los individuos de la población, lo que puede desembocar en un algoritmo menos adaptativo.
 
 === Operadores genéticos utilizados y detalles de implementación utilizados.
-En el código proporcionado, se utiliza un algoritmo genético para ajustar los parámetros del controlador (Kp, Ki y Kd). Los operadores genéticos utilizados son la selección, la cruza y la mutación.
+En el código proporcionado, se utiliza un algoritmo genético para ajustar los parámetros del controlador (Kp, Ki y Kd). Los operadores genéticos utilizados son la selección, la combinación y la mutación.
 
-La selección se realiza mediante el uso de una función de selección de ruleta, donde los individuos con mejores puntuaciones tienen una mayor probabilidad de ser seleccionados para la reproducción conocidos como la élite.
+Se realizan tres combinaciones; entre individios de la élite, entre un indivisuo de la élite y otro de la población general y entre indivisuos de la población general. Cada una de estas tre combinaciones conlleva un mecanismo de selección distinto.
+Para la combinación entre elementos de la élite, se escogen 2 indiviuos al azar pertenecientes al 10% de la población que ha obtenido mejores resultados. Para escoger elementos de población inicial, se escogen elementos al azar del total de población, incluyendo a al élite. 
+Para realizar esta selección de forma cómoda, los distintos individuos se ordenan en un array, quedadndo los individous de mejor puntuación primer (en los índices más bajos del mismo) y los individuos de peor puntuación al final. Así se harán accesos por secciones del array según el tipo de indivisuo que se quiera seleccionar.
 
-La cruza se realiza mediante el uso de un operador de cruza de un punto, donde dos individuos seleccionados al azar se cruzan en un punto aleatorio para generar dos nuevos individuos.
+La combinación entre dos individuos X, Y, produce dos "hijos" para la próxima generación, denotados Z1, Z2. Estos cogen dos de los valores de su cromosoma (compuesto por Kp, Ki y Kd) del individuo X y el valor restante del individuo Y. Es equiprobable que este elemento sea Kp, Ki o Kd. Este proceso es independiente del tipo de selección llevado a cabo.
 
-La mutación se realiza mediante el uso de un operador de mutación gaussiano, donde se aplica una distribución gaussiana alrededor de cada parámetro de un individuo seleccionado al azar con una probabilidad predefinida para generar un nuevo individuo.
+La operación de mutación se realiza según el valor de tres variables aleatorias; parámetro, severidad, y signo. La primera indica si el parátro a modificar será Kp, Ki o Kd. La variable severidad indica como de significante será la mutación, que implicará una suma o resta al parámetro seleccionado. A mayor severidad mayor es el valor con el que se realiza la operación, y por tánto, mayor es el cambio. La variable signo indica si se realizará una suma o una resta.
 
-La implementación de estos operadores genéticos se realiza mediante un ciclo iterativo, donde se genera una nueva población a partir de la población actual mediante la aplicación de los operadores genéticos mencionados anteriormente. El proceso se repite hasta alcanzar un criterio de finalización, como un número de generaciones o una puntuación mínima.
+La implementación de estos operadores genéticos se realiza mediante un ciclo iterativo, donde se genera una nueva población a partir de la población actual mediante la aplicación de los operadores genéticos mencionados anteriormente. El proceso se repite hasta alcanzar un criterio de finalización, que será desarrollado a continuación.
 
 === Función evaluadora utilizada.
 
-La función evaluadora utilizada en este caso es la función Score, la cual se encarga de evaluar el desempeño del controlador. Los parámetros medidos son calculados en el cuerpo del procedimiento Carry_out_a_simulation, después de realizar la simulación. En primer lugar, se busca el tiempo de subida (Tr) mediante un bucle for que recorre todos los valores de velocidad en la simulación. Se considera que el tiempo de subida ha ocurrido cuando se encuentra el primer valor de velocidad que es mayor o igual a la velocidad de referencia y el valor anterior es menor a la velocidad de referencia. Una vez encontrado el tiempo de subida, se busca el tiempo de pico (Tp) mediante un bucle for que recorre los valores de velocidad desde Tr hasta el final de la simulación. Se considera que el tiempo de pico ha ocurrido cuando se encuentra el primer valor de velocidad que es menor o igual al valor anterior.
+La función evaluadora utilizada en este caso es la función Score, la cual se encarga de evaluar el desempeño del controlador. Los parámetros medidos son calculados en el cuerpo del procedimiento Carry_out_a_simulation, después de realizar la simulación. En primer lugar, se busca el tiempo de subida (Tr) mediante un bucle for que recorre todos los valores de velocidad en la simulación. Se considera que el tiempo de subida ha ocurrido cuando se encuentra el primer valor de velocidad que es mayor o igual a la velocidad de referencia y el valor anterior es menor a la velocidad de referencia. Es entonces cuando se considera que la función ha cruzado el valor de consigna. Esta comprobación respecto al valor anterior evita que se den como válidos Tr obtenidos de una función que sobrepasa en todo memomento el valor consigna. Una vez encontrado el tiempo de subida, se busca el tiempo de pico (Tp) mediante un bucle for que recorre los valores de velocidad desde Tr hasta el final de la simulación. Se considera que el tiempo de pico ha ocurrido cuando se encuentra el primer valor de velocidad que es menor o igual al valor anterior, es decir, eque punto en el que la derivada de la función es igual o menor a 0 y por tanto se está produciendo una inflexión. 
 
-A continuación, se busca el tiempo de estabilización (Ts) mediante un bucle for que recorre los valores de velocidad en orden inverso desde Tp hasta el final de la simulación. Se considera que el tiempo de estabilización ha ocurrido cuando se encuentra el primer valor de velocidad que cumple con la condición de estar dentro del 2% de la velocidad de referenciada. 
+A continuación, se busca el tiempo de estabilización (Ts) mediante un bucle for que recorre los valores de velocidad en orden inverso desde Tp hasta el final de la simulación. Se actualiza el tiempo de estabilización cuando se encuentra un valor de velocidad que cumple con la condición de estar dentro del 2% de la velocidad de referenciada. Este valor se deja de actualizar cuando la diferencia es mayor al 2%, de esta manera se obtiene el primer punto (desde el origen t=0) en el que se ha llegado a dicho margen de validez.
 
-Por último, el valor máximo de sobrepico (Mp) se busca también mediante un bucle for que recorre todos los valores de velocidad en la simulación. Se considera que el sobrepico ha ocurrido cuando se encuentra el primer valor de velocidad que es mayor a la velocidad de referencia y menor al valor anterior.
+Por último, el valor de máximo sobreimpulso (Mp) se busca también mediante un bucle for que recorre todos los valores de velocidad en la simulación. Se considera que el sobreimpulso ha ocurrido utilizando el mismo criterio que para Tr. Además se realiza una penalización a los sistemas inestables que generan sobreimpulsos mayores al primero en las siguientes oscilaciones. Esto se hace mediante el guardado del primer Mp hallado, y la comparación del Mp correspondiente en el resto de puntos de inflexión con este primer Mp. En caso de que sean mayores se penaliza a este controlador aumentando el score.
 
-Una vez que se han calculado estos cuatro parámetros (Tr, Tp, Ts y Mp), se calcula la función Score como la suma de los valores absolutos de la diferencia entre los parámetros medidos y los parámetros esperados. Se espera que cuanto menor sea el valor de Score, mejor será el desempeño del controlador.
+También se realizan penalizaciones para Tr, en caso de que el sistema controlado no llegue en ningún momento a la consigna establecida.
+
+Una vez que se han calculado estos cuatro parámetros (Tr, Tp, Ts y Mp), se calcula la función Score como la suma de los valores absolutos de la diferencia entre los parámetros medidos y los parámetros esperados, que son calculados con anterioiridad mediante métodos matemáticos que serán expuesto a continuación. Se espera que cuanto menor sea el valor de Score, mejor será el desempeño del controlador.
 
 
 === Criterio de finalización del algoritmo genético.
 
 La condición de finalización del algoritmo se define dentro del package Simulator_operator o GA_operator. Es el segundo paquete quien determina la finalización de éxito, el primero sirve como control para evitar una ejecución infinita.
 
-Dentro del paquete GA_operator, el criterio de finalización del algoritmo genético está condicionado por dos expresiones booleanas excluyentes. La primera es el caso de éxito, que tiene lugar cuando el score obtenido por el primer inividuo de la población es menor que 10. La segunda es que se hayan generado más de 500 generaciones sin haber conseguido la condición de éxito.
+Dentro del paquete GA_operator, el criterio de finalización del algoritmo genético está condicionado por dos expresiones booleanas excluyentes. La primera es el caso de éxito, que tiene lugar cuando el score obtenido por el primer inividuo de la población es menor que el valor definido para la constante "Criterio", que establece el máximo error permitido. En el caso de las ejecuciones presentadas, se ha establecido como criterio el valor de 5, que hace que el error sea igual o inferior a 1 en las distintas variables evaluadas (Tr, Tp, Ts y Mp). La segunda condición valorada es que se hayan generado más de 500 generaciones sin haber conseguido la condición de éxito, lo que supondría un mal ajuste del algoritmo.
 
-En el paquete Simulator_operator, la ejecución es abortada cuando alguno de los individuos genera una velocidad superior a 5 veces el valor de referencia o inferior a cero. 
-
-Dadas estas condiciones de salida se asegura que la ejecución del AG siempre finalice. Cabe destacar que el criterio de score inferior a 10 en la condición de éxito, la hemos manipulado para establecer diferentes límites modificando una variable al comienzo del código.
+En el paquete Simulator_operator, la ejecución de cada una de las simulaciones es abortada cuando alguno de los individuos genera una velocidad superior a 5 veces el valor de referencia o inferior a cero. En este caso se considera el resultado de la simulación como no válido.
 
 == Resultados obtenidos.
 
+Tras la ejecución de nuestro programa en Ada, se ha obtenido el siguiente resultado:
+
+.Resultados del Algoritmo Genético.
+image::resultados-AG.png[AG,width=70%,height=70%, align="center"]
+ 
+Como se puede observar se ha modificado ligeramente la salida del mismo para poder visualizar los valores obtenidos de Tr, Tp, Ts y Mp tras la ejecución de la simulación en el programa. Estos valores están muy cerca de los esperados (Expected_Tr= 140, Expected_Tp=193, Expected_Ts=291). Para averiguar estos valores "Expected", se ha utilizado la herramienta de cálculo simbólico Maxima. Un archivo .mxw será adjunto a esta memoria, en el que se detalla el procedimiento llevado a cabo para el cálculo, así como los resultados intermedios.
+
+Los valores correspondientes a la configuración del PID son:
+
+Kp = 0.014419041
+Ki = 0.006774304
+Kd = 0.000000746
+
+
+Qué tras ser introducidos en scilab producen el siguiente resultado:
+
+.Simulación del resultado en Scilab.
+image::simulacion.png[simulacion,width=70%,height=70%, align="center"]
+ 
+Tras evaluar el resultado de la simulación se puede llegar a la conclusión de que el resultado obtenido por scilab no coincide con el resultado obtenido en la simulación llevada a cabo por el programa de Ada. Esto puede puede indicar que la simulación en scilab esté mal realizada, o en su defecto que el cálculo realizado por la función de simulación en ADA no es representativo respecto al resultado de una implementación real del controlador.
+La simulación de scilab tiene el siguiente aspecto:
+
+
+.Diagrama de Scilab.
+image::diagrama-scilab.png[simulacion,width=70%,height=70%, align="center"]
+
+ 
+Como se puede observar, implementa una entrada escalón que va desde 0 a 80 (representando el punto de trabajo), seguidamente de un punto de suma. Tras este podemos encontrar el controlador PID, donde introduciremos los valores obtenidos del algoritmo genético, a excepción de Ki que introduciremos la inversa (1/ki). Seguidamente encontramos la función de transferencia, obtenida según los valores del enunciado y que se pueden observar los cálculos en el fichero de máxima.
+
 == Valoración personal de los algoritmos genéticos.
+Bajo nuestra experiencia, los algoritmos genéticos han resultado una forma muy eficiente de calcular los parámetros para controladores PID, pues exploran un gran número de posibles configuraciones de una forma automática, y se ajustan a distintos escenarios simplemente cambiando los valores de entrada "Esperados". Esto permite que dadas las entradas de Tr, Tp, Mp, Ts y Controller_Reference, el programa implementado pueda diseñar un PID mediante el ajuste iterativo de los valores de Kp, Ki y Kd. En este caso, el modelo a ajustar es de segundo orden, y los resultados de ejecución se recogen en pocos segundos, lo cual resulta altamente eficiente en la vida profesional, permitiendo ahorrar mucho tiempo y recursos.
+Por otro lado, el entendimiento de este tipo de algoritmos ha sido bastante enriquecedor, ya que, para algunos de los miembros del grupo era la primera vez nos enfrentábamos con algo así, además de que la experiencia en programación en Ada era escasa. Aún así, el resultado es bastante satisfactorio, está claro que no es el ideal, pero como equipo la valoración final es positiva, considerandonos todos como satisfechos.
