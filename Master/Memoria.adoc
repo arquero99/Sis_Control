@@ -55,7 +55,15 @@ Por último, el valor máximo de sobrepico (Mp) se busca también mediante un bu
 Una vez que se han calculado estos cuatro parámetros (Tr, Tp, Ts y Mp), se calcula la función Score como la suma de los valores absolutos de la diferencia entre los parámetros medidos y los parámetros esperados. Se espera que cuanto menor sea el valor de Score, mejor será el desempeño del controlador.
 
 
-=== Criterio de finalización del algoritmo genético
+=== Criterio de finalización del algoritmo genético.
+
+La condición de finalización del algoritmo se define dentro del package Simulator_operator o GA_operator. Es el segundo paquete quien determina la finalización de éxito, el primero sirve como control para evitar una ejecución infinita.
+
+Dentro del paquete GA_operator, el criterio de finalización del algoritmo genético está condicionado por dos expresiones booleanas excluyentes. La primera es el caso de éxito, que tiene lugar cuando el score obtenido por el primer inividuo de la población es menor que 10. La segunda es que se hayan generado más de 500 generaciones sin haber conseguido la condición de éxito.
+
+En el paquete Simulator_operator, la ejecución es abortada cuando alguno de los individuos genera una velocidad superior a 5 veces el valor de referencia o inferior a cero. 
+
+Dadas estas condiciones de salida se asegura que la ejecución del AG siempre finalice. Cabe destacar que el criterio de score inferior a 10 en la condición de éxito, la hemos manipulado para establecer diferentes límites modificando una variable al comienzo del código.
 
 == Resultados obtenidos.
 
