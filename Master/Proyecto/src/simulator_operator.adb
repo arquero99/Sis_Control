@@ -10,13 +10,12 @@ package body Simulator_operator is
       abort_simulation : boolean := false;
       Tp : integer;
       Tr, Ts : integer;
-      Mp : Real;
-      first_Mp: Boolean:=true;
+      Mp_Value, Mp : Real;
       Controller_reference : constant Real := 80.0;
       Expected_Tr : constant integer := 140; -- /12 ms
-      Expected_Tp : constant integer := 507; -- /14 ms
+      Expected_Tp : constant integer := 193; -- /14 ms
       Expected_Mp : constant Real := 0.07*Controller_reference; -- 7%
-      Expected_Ts : constant integer := 769; --/10 ms
+      Expected_Ts : constant integer := 291; --/10 ms
    begin
       -- Init motor simulator and speed controller
       Dc_motor_sim.init;
@@ -58,27 +57,32 @@ package body Simulator_operator is
          -- Look for rise time
          Tr := 0;
 
-         if Tr = 0 then
-            for x in 2..2000 loop
-               if (speed(x) >= Controller_reference) and (speed(x-1) <= Controller_reference) then
-                  Tr := x;
-               end if;
-            end loop;
-         end if;
 
-         -- Set Tp
+         for x in 2..1999 loop
+            if (speed(x) >= Controller_reference) then --Detectar cuando cruza la linea de la velocidad objetivo
+               Tr := x;
+               exit;
+            else
+               Tr := Integer'Last/4;
+            end if;
+         end loop;
+
+
+         -- Set Tp and Mp
          if (Tr > 0) and (Tr < 2000) then
-            for x in Tr..2000 loop
-               if speed(x) <= speed(x-1) then
-                  Tp := x;
+            for x in Tr..2000 loop            -- Se parte de Tr
+               if speed(x) <= speed(x-1) then -- Detectar cuando decae/se estabiliza la velocidad
+                  Tp := x-1;
+                  Mp := speed(x-1) - Controller_reference;
+                  exit;
                end if;
             end loop;
          end if;
 
 
-         -- Look for settling time
+         -- Cálculo de Ts
          if (Tp > 0) and (Tp < 2000) then
-            for x in reverse Tp..2000 loop
+            for x in reverse Tp..2000 loop --Dado que el tiempo de establecimiento es a la derecha del tiempo de pico se corta en este
                if abs(Controller_reference - speed(x)) <= Controller_reference*0.02 then
                   Ts := x;
                end if;
@@ -87,24 +91,24 @@ package body Simulator_operator is
             Ts := integer'Last/4;
          end if;
 
-         -- Set Mp
-         if(Tr > 0) and (Tr < 2000) then
-            for x in Tr..2000 loop
-               if (speed(x) >= Controller_reference) and (speed(x) < speed(x-1)) then
-                  if first_Mp then
-                     Mp := speed(x) - Controller_reference;
-                     first_Mp:=false;
-                  else
-                     if (speed(x) - Controller_reference)>Mp then
-                        Mp:=Real(integer'Last/4);
-                     end if;
-                     --exit;
-                  end if;
-               end if;
-            end loop;
+         -- Cálculo de Mp
+         --if(Tr > 0) and (Tr < 2000) then
+           -- for x in Tr..2000 loop
+           --    if (speed(x) <= speed(x-1)) and speed(x) > Controller_reference then
+           --       Mp := speed(x-1) - Controller_reference;
+           --       exit;
+           --    end if;
+           -- end loop;
+         --end if;
+
+         if(Mp <= Expected_Mp) then
+            Mp_Value := 0.0;                       --Premio si está por debajo de ese 7%.
+         else
+            Mp_Value := Real'Last/4;               --Castigo si está por encima.
          end if;
 
-         Score := Real(abs(Tr - Expected_Tr)) + Real(abs(Ts - Expected_Ts)) + Real(abs(Tp - Expected_Tp)) + Real(abs(Mp - Expected_Mp));
+         --Cálculo de Score
+         Score := Real(abs(Tr - Expected_Tr)) + Real(abs(Ts - Expected_Ts)) + Real(abs(Tp - Expected_Tp)) + Real(abs(Mp_Value));
       end if;
 
    end Carry_out_a_simulation;
