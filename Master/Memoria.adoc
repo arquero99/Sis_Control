@@ -3,25 +3,21 @@
 :doctype: book
 :toc:
 :icons: font
-:author: Juan Arquero Gallego, Luis Santana Escudero
+:author: Juan Arquero Gallego, Luis Santana Escudero, David García Castaño
 :title-logo-image: images/upm_logo.png
 
-= Práctica de algoritmos genéticos
+= Práctica de algoritmos genéticos.
 
-== Descripción del sistema a controlar
+== Descripción del sistema a controlar.
 
 El sistema a controlar es un motor DC, el cual se utiliza en una amplia variedad de aplicaciones en las que se requiere controlar la velocidad de giro. Este tipo de motor es uno de los más utilizados en la industria debido a su sencillez y fiabilidad.
 
-En términos técnicos, un motor DC es un tipo de motor eléctrico que funciona con corriente continua. Esto significa que la corriente eléctrica que alimenta al motor fluye en una sola dirección, lo que permite un control preciso de la velocidad del motor. El control de la velocidad se logra mediante el ajuste de la corriente eléctrica que alimenta al motor.
+En términos técnicos, un motor DC es un tipo de motor eléctrico que funciona con corriente continua. Esto significa que la corriente eléctrica que alimenta al motor fluye en una sola dirección, lo que permite un control preciso de la velocidad del motor.
 
-En el caso específico del sistema que se está controlando, se espera que el motor alcance una velocidad de referencia de 80 RPM (revoluciones por minuto). Para lograr esto, se utilizará un controlador PID (proporcional-integral-derivativo) el cual ajusta la corriente eléctrica que alimenta al motor para lograr la velocidad deseada.
-
-En términos generales, el sistema consiste en un motor DC conectado a un controlador PID, el cual es programado para alcanzar una velocidad deseada. El controlador recibe información de velocidad del motor a través de sensores y ajusta la corriente eléctrica que alimenta al motor para lograr la velocidad deseada.
+En el caso específico del sistema que se está controlando, se espera que el motor alcance una velocidad de referencia de 80 RPM (revoluciones por minuto). Para lograr esto, se utilizará un controlador PID (proporcional-integral-derivativo).
 
 
-== Descripción del algoritmo de control a utilizar
-
-La solución proporcionada utiliza un algoritmo de control denominado controlador PID (Proporcional, Integral y Derivativo). Este algoritmo es ampliamente utilizado en sistemas de control automático debido a su simplicidad y eficacia en la estabilización de procesos.
+== Descripción del algoritmo de control a utilizar.
 
 El controlador PID se compone de tres componentes: el componente proporcional, el componente integral y el componente derivativo. Cada uno de estos componentes tiene un efecto diferente en el sistema de control y se ajustan mediante tres parámetros, Kp, Ki y Kd respectivamente.
 
@@ -29,32 +25,27 @@ El componente proporcional tiene un efecto directo en la salida del controlador,
 
 En la solución proporcionada, se inicializa el controlador PID con los valores Kp, Ki y Kd proporcionados como parámetros de entrada. Luego, en cada ciclo de simulación, el controlador PID ejecuta sus tres componentes y ajusta la salida del controlador en consecuencia. Esta salida es luego utilizada para actualizar el estado del sistema simulado, en este caso la velocidad del motor DC.
 
-En resumen, el algoritmo de control utilizado en la solución proporcionada es un controlador PID, que utiliza los tres componentes proporcional, integral y derivativo para estabilizar el sistema mediante la corrección de errores en la medición del sistema en relación con la referencia. Los parámetros Kp, Ki y Kd
-
-== Descripción del procedimiento de ajuste del controlador por medio de un AG
+== Descripción del procedimiento de ajuste del controlador por medio de un AG.
 El procedimiento de ajuste del controlador por medio de un AG se refiere al proceso de optimizar los parámetros del controlador utilizando un algoritmo genético. El algoritmo genético es un enfoque de optimización basado en la evolución natural, en el que una población de soluciones candidatas es sometida a procesos de selección, cruce y mutación para generar una nueva población en cada generación. El objetivo es encontrar la solución óptima para el problema de optimización.
 
-En este caso, los parámetros del controlador a optimizar son Kp, Ki y Kd, que son los tres parámetros utilizados en el algoritmo de control PID (Control Proporcional Integral Derivativo). Estos parámetros afectan directamente a la respuesta del sistema controlado y su optimización es esencial para lograr un desempeño óptimo del controlador.
+En este caso, los parámetros del controlador a optimizar son Kp, Ki y Kd, que son los tres parámetros utilizados en el algoritmo de control PID. Estos parámetros afectan directamente a la respuesta del sistema controlado y su optimización es esencial para lograr un desempeño óptimo del controlador.
 
-Para generar la población inicial, se pueden utilizar diferentes técnicas, como el algoritmo de generación aleatoria o el algoritmo de generación basado en la información. En este caso, la población inicial se genera utilizando una técnica de generación aleatoria, en la que se asignan valores aleatorios a los parámetros Kp, Ki y Kd.
+=== Forma de generar la población inicial.
+La población consta de 2000 individios que se genera de forma aleatoria. Cada individuo de la población se representa mediante un cromosoma, el cual contiene los valores de los parámetros Kp, Ki y Kd. Los valores de estos parámetros están limitados dentro de un rango específico para evitar valores extremos.
 
-En cuanto a los operadores genéticos, se utilizan tres principales: la selección, la cruza y la mutación. La selección se utiliza para seleccionar
-
-=== Forma de generar la población inicial
-La población inicial se genera de forma aleatoria. Cada individuo de la población se representa mediante un cromosoma, el cual contiene los valores de los parámetros Kp, Ki y Kd. Los valores de estos parámetros están limitados dentro de un rango específico para evitar valores extremos.
-
-=== Operadores genéticos utilizados y detalles de implementación utilizados
+=== Operadores genéticos utilizados y detalles de implementación utilizados.
 En el código proporcionado, se utiliza un algoritmo genético para ajustar los parámetros del controlador (Kp, Ki y Kd). Los operadores genéticos utilizados son la selección, la cruza y la mutación.
 
-La selección se realiza mediante el uso de una función de selección de ruleta, donde los individuos con mejores puntuaciones tienen una mayor probabilidad de ser seleccionados para la reproducción.
+La selección se realiza mediante el uso de una función de selección de ruleta, donde los individuos con mejores puntuaciones tienen una mayor probabilidad de ser seleccionados para la reproducción conocidos como la élite.
 
 La cruza se realiza mediante el uso de un operador de cruza de un punto, donde dos individuos seleccionados al azar se cruzan en un punto aleatorio para generar dos nuevos individuos.
 
 La mutación se realiza mediante el uso de un operador de mutación gaussiano, donde se aplica una distribución gaussiana alrededor de cada parámetro de un individuo seleccionado al azar con una probabilidad predefinida para generar un nuevo individuo.
 
-La implementación de estos operadores genéticos se realiza mediante un ciclo iterativo, donde se genera una nueva población a partir de la población actual mediante la aplicación de los operadores genéticos mencionados anteriormente. El proceso se repite hasta alcanzar un criterio de finalización, como un número de generaciones o una puntuación mínima.controlador mediante un AG.
+La implementación de estos operadores genéticos se realiza mediante un ciclo iterativo, donde se genera una nueva población a partir de la población actual mediante la aplicación de los operadores genéticos mencionados anteriormente. El proceso se repite hasta alcanzar un criterio de finalización, como un número de generaciones o una puntuación mínima.
 
-=== Función evaluadora utilizada:
+=== Función evaluadora utilizada.
+
 La función evaluadora utilizada en este caso es la función Score, la cual se encarga de evaluar el desempeño del controlador. Los parámetros medidos son calculados en el cuerpo del procedimiento Carry_out_a_simulation, después de realizar la simulación. En primer lugar, se busca el tiempo de subida (Tr) mediante un bucle for que recorre todos los valores de velocidad en la simulación. Se considera que el tiempo de subida ha ocurrido cuando se encuentra el primer valor de velocidad que es mayor o igual a la velocidad de referencia y el valor anterior es menor a la velocidad de referencia. Una vez encontrado el tiempo de subida, se busca el tiempo de pico (Tp) mediante un bucle for que recorre los valores de velocidad desde Tr hasta el final de la simulación. Se considera que el tiempo de pico ha ocurrido cuando se encuentra el primer valor de velocidad que es menor o igual al valor anterior.
 
 A continuación, se busca el tiempo de estabilización (Ts) mediante un bucle for que recorre los valores de velocidad en orden inverso desde Tp hasta el final de la simulación. Se considera que el tiempo de estabilización ha ocurrido cuando se encuentra el primer valor de velocidad que cumple con la condición de estar dentro del 2% de la velocidad de referenciada. 
@@ -64,5 +55,8 @@ Por último, el valor máximo de sobrepico (Mp) se busca también mediante un bu
 Una vez que se han calculado estos cuatro parámetros (Tr, Tp, Ts y Mp), se calcula la función Score como la suma de los valores absolutos de la diferencia entre los parámetros medidos y los parámetros esperados. Se espera que cuanto menor sea el valor de Score, mejor será el desempeño del controlador.
 
 
-===  Criterio de finalización del algoritmo genético:
-El criterio de finalización del algoritmo genético en este caso puede ser un número fijo de generaciones o un umbral de Score alcanzado. Por ejemplo, se podría establecer que el algoritmo genético debe detenerse cuando se alcance un Score menor a un cierto valor o cuando se hayan generado un cierto número de poblaciones. También se podría establecer un límite de tiempo para detener el algoritmo. Es importante tener en cuenta que establecer un criterio de finalización adecuado es clave para obtener un buen rendimiento del algoritmo genético.
+=== Criterio de finalización del algoritmo genético
+
+== Resultados obtenidos.
+
+== Valoración personal de los algoritmos genéticos.
